@@ -1,0 +1,55 @@
+services:
+  # ─────────────────────────────────────────────
+  # PicoClaw Agent (one-shot query)
+  #   docker compose -f docker/docker-compose.yml run --rm {{ agent_project_name }}agent -m "Hello"
+  # ─────────────────────────────────────────────
+  {{ agent_project_name }}-agent:
+    image: docker.io/sipeed/picoclaw:latest
+    container_name: {{ agent_project_name }}-agent
+    profiles:
+      - agent
+    # Uncomment to access host network; leave commented unless needed.
+    #extra_hosts:
+    #  - "host.docker.internal:host-gateway"
+    volumes:
+      - ./data:/root/.picoclaw
+    entrypoint: ["picoclaw", "agent"]
+    stdin_open: true
+    tty: true
+
+  # ─────────────────────────────────────────────
+  # PicoClaw Gateway (Long-running Bot)
+  #   docker compose -f docker/docker-compose.yml --profile gateway up
+  # ─────────────────────────────────────────────
+  {{ agent_project_name }}-gateway:
+    image: docker.io/sipeed/picoclaw:latest
+    container_name: {{ agent_project_name }}-gateway
+    restart: unless-stopped
+    profiles:
+      - gateway
+    # Uncomment to access host network; leave commented unless needed.
+    #extra_hosts:
+    #  - "host.docker.internal:host-gateway"
+    volumes:
+      - ./data:/root/.picoclaw
+
+  # ─────────────────────────────────────────────
+  # PicoClaw Launcher (Web Console + Gateway)
+  #   docker compose -f docker/docker-compose.yml --profile launcher up
+  # ─────────────────────────────────────────────
+  {{ agent_project_name }}-launcher:
+    image: docker.io/sipeed/picoclaw:launcher
+    container_name: {{ agent_project_name }}-launcher
+    restart: unless-stopped
+    profiles:
+      - launcher
+    environment:
+      - PICOCLAW_GATEWAY_HOST=0.0.0.0
+      # Set a fixed dashboard token instead of a random one each restart.
+      # If not set, a random token is generated and printed to the console on startup.
+      - PICOCLAW_LAUNCHER_TOKEN={{ your-secret-token-here }}
+    ports:
+      - "{{ launcher_port }}:18800"
+      - "{{ launcher_port_secure }}:18790"
+    volumes:
+      - ./data:/root/.picoclaw

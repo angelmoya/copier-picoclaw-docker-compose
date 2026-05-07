@@ -1,0 +1,36 @@
+# CONFIGURATION -------------------------
+_subdirectory: project_template
+_templates_suffix: .jinja
+
+# PROMPT --------------------------------
+agent_project_name:
+    type: str
+    help: >-
+        What's your agent project name?
+
+        Do not use dots or spaces in the name; just "A-Za-z0-9-_" please.
+    default: "picoclaw"
+
+your-secret-token-here:
+    help: >-
+        Insert a password for the launcher.
+
+        Do not use special characters or spaces; just "A-Za-z0-9-" please.
+        Follow this format: your-secret-token-here
+    type: str
+    secret: true
+    default: "your-secret-token-here"
+
+launcher_port:
+    type: int
+    help: >-
+        What's your launcher port?
+
+    default: "18800"
+
+launcher_port_secure:
+    type: int
+    help: >-
+        What's your secure launcher port?
+
+    default: "18790"
