@@ -21,7 +21,7 @@ copier copy https://github.com/angelmoya/copier-picoclaw-docker-compose.git mi-n
 ### Variables de configuración
 Durante la generación, se te solicitarán los siguientes datos:
 - **`agent_project_name`**: Nombre identificativo del proyecto (usado en los nombres de contenedores).
-- **`your-secret-token-here`**: Token/Password para acceder al Launcher Web.
+- **`launcher_token`**: Token/Password para acceder al Launcher Web.
 - **`launcher_port`**: Puerto para la interfaz Web (por defecto `18800`).
 - **`launcher_port_secure`**: Puerto seguro (por defecto `18790`).
 

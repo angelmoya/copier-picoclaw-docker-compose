@@ -11,7 +11,7 @@ agent_project_name:
         Do not use dots or spaces in the name; just "A-Za-z0-9-_" please.
     default: "picoclaw"
 
-your-secret-token-here:
+launcher_token:
     help: >-
         Insert a password for the launcher.
 
