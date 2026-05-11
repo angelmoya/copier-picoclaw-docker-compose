@@ -30,7 +30,11 @@ services:
     # Uncomment to access host network; leave commented unless needed.
     #extra_hosts:
     #  - "host.docker.internal:host-gateway"
+    environment:
+      - TZ=Europe/Madrid
     volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
       - ./data:/root/.picoclaw
 
   # ─────────────────────────────────────────────
